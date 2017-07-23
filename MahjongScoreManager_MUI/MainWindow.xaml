@@ -1,0 +1,28 @@
+﻿<mui:ModernWindow x:Class="MahjongScoreManager_MUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Title="Mahjong Score Manager" IsTitleVisible="True"
+        ContentSource="/Views/NewGameView.xaml">
+
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="麻雀スコア管理ツール">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="新規対局" Source="/Views/NewGameView.xaml" />
+                <mui:Link DisplayName="対局情報参照" Source="/Views/Home.xaml" />
+                <mui:Link DisplayName="対局者変更" Source="/Views/PlayerSettingView.xaml" />
+                <mui:Link DisplayName="対局設定" Source="/Views/RuleSettingView.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="settings" GroupKey="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="software" Source="/Views/SettingsPageView.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+    
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="アプリ設定" Source="/Views/SettingsPageView.xaml" />
+        <mui:Link DisplayName="ヘルプ" Source="http://projectstep.web.fc2.com/" />
+    </mui:ModernWindow.TitleLinks>
+</mui:ModernWindow>

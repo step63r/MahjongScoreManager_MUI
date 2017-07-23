@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MahjongScoreManager_MUI.Views.RuleSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:vm="clr-namespace:MahjongScoreManager_MUI.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!--ViewModelクラス-->
+    <UserControl.DataContext>
+        <vm:RuleSettingViewModel/>
+    </UserControl.DataContext>
+
+    <!--メッセージボックス表示トリガー-->
+    <i:Interaction.Triggers>
+        <common:MessageBoxTrigger>
+            <common:MessageBoxAction />
+        </common:MessageBoxTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="対局設定" Style="{StaticResource Heading2}" />
+                <ListBox x:Name="listRule" ItemsSource="{Binding Path=ColRule, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" MinHeight="100"/>
+                <!--上手くバインドできていない-->
+                <!--クラスとバインドしない方がいい？-->
+                <TextBlock Text="設定名称"/>
+                <TextBox x:Name="txtName" Text="{Binding Path=SelectedRule.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="レート" />
+                <TextBox x:Name="txtRate" Text="{Binding Path=SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
+                <TextBlock Text="配給原点" />
+                <TextBox x:Name="txtBasePoint" Text="{Binding Path=SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
+                <TextBlock Text="返し" />
+                <TextBox x:Name="txtReturnPoint" Text="{Binding Path=SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
+                <TextBlock Text="ウマ（3位→2位）" />
+                <TextBox x:Name="txtPrise3To2" Text="{Binding Path=SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
+                <TextBlock Text="ウマ（4位→1位）" />
+                <TextBox x:Name="txtPrise4To1" Text="{Binding Path=SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
+                <TextBlock Text="端数の取り扱い" />
+                <ComboBox x:Name="cmbFraction" ItemsSource="{Binding HandleFractions}" DisplayMemberPath="Label" SelectedIndex="{Binding Path=SelectedRule.Fraction}"/>
+                <Button x:Name="btnAddNew" Content="新規登録" Command="{Binding Path=CreateNewCommand}"/>
+                <Button x:Name="btnUpdate" Content="更新" Command="{Binding Path=AddCommand}"/>
+                <Button x:Name="btnDelete" Content="削除" Command="{Binding Path=RemoveCommand}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

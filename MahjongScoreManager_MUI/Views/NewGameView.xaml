@@ -1,0 +1,176 @@
+﻿<UserControl x:Class="MahjongScoreManager_MUI.Views.NewGameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:behavior="clr-namespace:MahjongScoreManager_MUI.Behaviors"
+             xmlns:vm="clr-namespace:MahjongScoreManager_MUI.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!--ViewModelクラス-->
+    <UserControl.DataContext>
+        <vm:NewGameViewModel/>
+    </UserControl.DataContext>
+
+    <!--メッセージボックス表示トリガー-->
+    <i:Interaction.Triggers>
+        <common:MessageBoxTrigger>
+            <common:MessageBoxAction />
+        </common:MessageBoxTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--対局結果グリッド-->
+                    <Grid Grid.Row="0" Margin="5">
+                        <StackPanel Orientation="Vertical">
+                            <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="東家"/>
+                                <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="南家"/>
+                                <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="西家"/>
+                                <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="北家"/>
+                                <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <!--計算結果グリッド-->
+                    <Grid Grid.Row="1" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <!--東家-->
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+                                    <TextBlock Text="東家" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+
+                            <!--南家-->
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+                                    <TextBlock Text="南家" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+
+                            <!--西家-->
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+                                    <TextBlock Text="西家" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+
+                            <!--北家-->
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
+                                    <TextBlock Text="北家" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <!--対局設定グリッド-->
+                <Grid Grid.Column="1" Margin="5">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="対局設定"/>
+                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0"/>
+
+                        <TextBlock Text="レート"/>
+                        <TextBlock Text="{Binding SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
+                        <TextBlock Text="配給原点"/>
+                        <TextBlock Text="{Binding SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="返し"/>
+                        <TextBlock Text="{Binding SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="ウマ（3→2）"/>
+                        <TextBlock Text="{Binding SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="ウマ（4→1）"/>
+                        <TextBlock Text="{Binding SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="端数取扱"/>
+                        <!--コンバータが必要-->
+                        <TextBlock Text="五捨六入" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
+                    <Button x:Name="btnGenerateGame" Content="保存" Command="{Binding Path=GenerateGameCommand}"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
