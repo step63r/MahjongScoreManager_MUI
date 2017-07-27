@@ -147,5 +147,81 @@ namespace MahjongScoreManager_MUI.Common
 
             return ret;
         }
+
+        /// <summary>
+        /// 値を四捨五入します
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <param name="decimals">小数部桁数</param>
+        /// <param name="mode">丸める方法</param>
+        /// <returns>丸められた値</returns>
+        public static double Round(double value, int decimals, MidpointRounding mode = MidpointRounding.AwayFromZero)
+        {
+            // 小数部桁数の10の累乗を取得
+            double pow = Math.Pow(10, decimals);
+
+            return Math.Round(value * pow, mode) / pow;
+        }
+
+        /// <summary>
+        /// 値が5以下なら切り捨て、5より大きければ切り上げます
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <param name="decimals">小数部桁数</param>
+        /// <returns>丸められた値</returns>
+        public static double RoundExtra(double value, int decimals)
+        {
+            if (value <= 5)
+            {
+                return Floor(value, decimals);
+            }
+            else
+            {
+                return Ceiling(value, decimals);
+            }
+        }
+
+        /// <summary>
+        /// 値が0以上なら切り捨て、0未満なら切り上げます
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <returns>丸められた値</returns>
+        public static double RoundBase(double value, int decimals)
+        {
+            if (value >= 0)
+            {
+                return Floor(value, decimals);
+            }
+            else
+            {
+                return Ceiling(value, decimals);
+            }
+        }
+
+        /// <summary>
+        /// 値を切り捨てます
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <param name="decimals">小数部桁数</param>
+        /// <returns>丸められた値</returns>
+        public static double Floor(double value, int decimals)
+        {
+            double pow = Math.Pow(10, decimals);
+
+            return Math.Floor(value * pow) / pow;
+        }
+
+        /// <summary>
+        /// 値を切り上げます
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <param name="decimals">小数部桁数</param>
+        /// <returns>丸められた値</returns>
+        public static double Ceiling(double value, int decimals)
+        {
+            double pow = Math.Pow(10, decimals);
+
+            return Math.Ceiling(value * pow) / pow;
+        }
     }
 }

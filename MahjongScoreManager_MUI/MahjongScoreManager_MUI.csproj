@@ -60,6 +60,8 @@
     </Compile>
     <Compile Include="Common\MessageBoxTrigger.cs" />
     <Compile Include="Common\PropertyChangedEventHandlerExtensions.cs" />
+    <Compile Include="Common\XamlConverter.cs" />
+    <Compile Include="Models\NewGameModel.cs" />
     <Compile Include="Models\PlayerSettingModel.cs" />
     <Compile Include="Models\RuleSettingModel.cs" />
     <Compile Include="ViewModels\HandleFractionViewModel.cs" />

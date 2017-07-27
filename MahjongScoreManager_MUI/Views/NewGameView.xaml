@@ -10,6 +10,10 @@
              xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <common:EnumToStringConverter x:Key="EnumToString"/>
+    </UserControl.Resources>
+    
     <!--ViewModelクラス-->
     <UserControl.DataContext>
         <vm:NewGameViewModel/>
@@ -44,27 +48,27 @@
                             <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}"/>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="東家"/>
-                                <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                                <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="南家"/>
-                                <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                                <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="西家"/>
-                                <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                                <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="北家"/>
-                                <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
+                                <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="0"/>
+                                <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
+                                <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -82,7 +86,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="東家" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=SelectedPersonEast.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <TextBlock Text="0" HorizontalAlignment="Center"/>
@@ -100,7 +104,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="南家" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=SelectedPersonSouth.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <TextBlock Text="0" HorizontalAlignment="Center"/>
@@ -118,7 +122,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="西家" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=SelectedPersonWest.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <TextBlock Text="0" HorizontalAlignment="Center"/>
@@ -136,7 +140,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="北家" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=SelectedPersonNorth.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <TextBlock Text="0" HorizontalAlignment="Center"/>
@@ -153,22 +157,26 @@
                         <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0"/>
 
                         <TextBlock Text="レート"/>
-                        <TextBlock Text="{Binding SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.Rate, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
                         <TextBlock Text="配給原点"/>
-                        <TextBlock Text="{Binding SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.BasePoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
                         <TextBlock Text="返し"/>
-                        <TextBlock Text="{Binding SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.ReturnPoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
                         <TextBlock Text="ウマ（3→2）"/>
-                        <TextBlock Text="{Binding SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.Prise3To2, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
                         <TextBlock Text="ウマ（4→1）"/>
-                        <TextBlock Text="{Binding SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.Prise4To1, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
                         <TextBlock Text="端数取扱"/>
                         <!--コンバータが必要-->
-                        <TextBlock Text="五捨六入" Margin="5,0,0,0"/>
+                        <TextBlock Text="{Binding SelectedRule.Fraction, Converter={StaticResource EnumToString}}" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
-                    <Button x:Name="btnGenerateGame" Content="保存" Command="{Binding Path=GenerateGameCommand}"/>
+                    <StackPanel>
+                        <Button x:Name="btnCalcGame" Content="計算" Command="{Binding Path=CalcGameCommand}"/>
+                        <Button x:Name="btnGenerateGame" Content="保存" Command="{Binding Path=GenerateGameCommand}"/>
+                    </StackPanel>
+                    
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -32,11 +32,11 @@
         /// </summary>
         private static Dictionary<HandleFraction, string> fractionLabelMap = new Dictionary<HandleFraction, string>
         {
-            { HandleFraction.Round, "四捨五入" },
-            { HandleFraction.RoundExtra, "五捨六入" },
-            { HandleFraction.RoundBase, "返しと得点の差に依拠" },
-            { HandleFraction.Floor, "切り捨て" },
-            { HandleFraction.Ceiling, "切り上げ" }
+            { HandleFraction.四捨五入, "四捨五入" },
+            { HandleFraction.五捨六入, "五捨六入" },
+            { HandleFraction.返しと得点の差に依拠, "返しと得点の差に依拠" },
+            { HandleFraction.切り捨て, "切り捨て" },
+            { HandleFraction.切り上げ, "切り上げ" }
         };
 
         /// <summary>

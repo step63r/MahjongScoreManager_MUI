@@ -334,22 +334,22 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 0. 四捨五入
         /// </summary>
-        Round,
+        四捨五入,
         /// <summary>
         /// 1. 五捨六入
         /// </summary>
-        RoundExtra,
+        五捨六入,
         /// <summary>
         /// 2. 返し - 得点がプラスなら切り捨て、マイナスなら切り上げ
         /// </summary>
-        RoundBase,
+        返しと得点の差に依拠,
         /// <summary>
         /// 3. 切り捨て
         /// </summary>
-        Floor,
+        切り捨て,
         /// <summary>
         /// 4. 切り上げ
         /// </summary>
-        Ceiling
+        切り上げ
     }
 }

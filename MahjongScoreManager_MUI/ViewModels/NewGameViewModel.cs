@@ -12,6 +12,21 @@
     {
         #region コマンド・プロパティ
         /// <summary>
+        /// 「計算」コマンド
+        /// </summary>
+        private DelegateCommand calcGameCommand;
+        public DelegateCommand CalcGameCommand
+        {
+            get
+            {
+                if (calcGameCommand == null)
+                {
+                    calcGameCommand = new DelegateCommand(CalcGame, CanCalcGame);
+                }
+                return calcGameCommand;
+            }
+        }
+        /// <summary>
         /// 「保存」コマンド
         /// </summary>
         private DelegateCommand generateGameCommand;
@@ -57,31 +72,83 @@
         /// <summary>
         /// 選択中の対局者（東家）
         /// </summary>
-        public Person SelectedPersonEast { get; set; }
+        private Person selectedPersonEast;
+        public Person SelectedPersonEast
+        {
+            get
+            {
+                return selectedPersonEast;
+            }
+            set
+            {
+                selectedPersonEast = value;
+                RaisePropertyChanged("SelectedPersonEast");
+            }
+        }
         public int EastBaseScore { get; set; }
         public int EastPriseScore { get; set; }
+        public int EastCalcedScore { get; set; }
         /// <summary>
         /// 選択中の対局者（南家）
         /// </summary>
-        public Person SelectedPersonSouth { get; set; }
+        private Person selectedPersonSouth;
+        public Person SelectedPersonSouth
+        {
+            get
+            {
+                return selectedPersonSouth;
+            }
+            set
+            {
+                selectedPersonSouth = value;
+                RaisePropertyChanged("SelectedPersonSouth");
+            }
+        }
         public int SouthBaseScore { get; set; }
         public int SouthPriseScore { get; set; }
+        public int SouthCalcedScore { get; set; }
         /// <summary>
         /// 選択中の対局者（西家）
         /// </summary>
-        public Person SelectedPersonWest { get; set; }
+        private Person selectedPersonWest;
+        public Person SelectedPersonWest
+        {
+            get
+            {
+                return selectedPersonWest;
+            }
+            set
+            {
+                selectedPersonWest = value;
+                RaisePropertyChanged("SelectedPersonWest");
+            }
+        }
         public int WestBaseScore { get; set; }
         public int WestPriseScore { get; set; }
+        public int WestCalcedScore { get; set; }
         /// <summary>
         /// 選択中の対局者（北家）
         /// </summary>
-        public Person SelectedPersonNorth { get; set; }
+        private Person selectedPersonNorth;
+        public Person SelectedPersonNorth
+        {
+            get
+            {
+                return selectedPersonNorth;
+            }
+            set
+            {
+                selectedPersonNorth = value;
+                RaisePropertyChanged("SelectedPersonNorth");
+            }
+        }
         public int NorthBaseScore { get; set; }
         public int NorthPriseScore { get; set; }
+        public int NorthCalcedScore { get; set; }
         /// <summary>
         /// 対局クラス
         /// </summary>
-        public GameType4 ThisGame { get; set; }
+        private GameType4 ThisGame;
         /// <summary>
         /// 設定オブジェクト
         /// </summary>
@@ -98,6 +165,23 @@
             var displayTuple = Load();
             ColPerson = displayTuple.Item1;
             ColRule = displayTuple.Item2;
+        }
+
+        /// <summary>
+        /// 対局計算のコマンド実行
+        /// </summary>
+        public void CalcGame()
+        {
+
+        }
+
+        /// <summary>
+        /// 対局計算が実行可能かどうかを判定
+        /// </summary>
+        /// <returns></returns>
+        public bool CanCalcGame()
+        {
+            return false;
         }
 
         /// <summary>
