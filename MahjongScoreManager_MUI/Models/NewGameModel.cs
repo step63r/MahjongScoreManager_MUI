@@ -2,6 +2,8 @@
 {
     using MahjongScoreManager_MUI.Common;
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// NewGameのModelクラス
@@ -32,31 +34,33 @@
         /// 設定オブジェクト
         /// </summary>
         public GameSettingType4 Setting;
+        /// <summary>
+        /// 対局コレクション（保存で使用）
+        /// </summary>
+        public ObservableCollection<GameType4> ColGame;
 
         /// <summary>
         /// スコアを計算する
         /// </summary>
         /// <returns>要素の小さい方から [東, 南, 西, 北] のスコア</returns>
-        public double[] Execute()
+        public double[] ExecuteCalc()
         {
             // 返しとの差を取る（端数計算を考慮する）
             var ret = new double[4] {
-                Setting.ReturnPoint - EastBaseScore,
-                Setting.ReturnPoint - SouthBaseScore,
-                Setting.ReturnPoint - WestBaseScore,
-                Setting.ReturnPoint - NorthBaseScore
+                EastBaseScore - Setting.ReturnPoint,
+                SouthBaseScore - Setting.ReturnPoint,
+                WestBaseScore - Setting.ReturnPoint,
+                NorthBaseScore - Setting.ReturnPoint
             };
-
-            ret = CalcFraction(ret);
 
             // 順位を算出する（同率は上家が上位と見なす）
             var rank = new int[4];
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 // 順位を保持しておく変数
                 int p = 1;
 
-                for (int j = 0; j <= 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     // 自分と比較しない
                     if (i == j)
@@ -83,6 +87,9 @@
                 rank[i] = p;
             }
 
+            // 端数を調整する
+            ret = CalcFraction(ret);
+
             // 2～4位を計算してから1位を計算させる
             // 【1位でない場合】
             // ウマの配給
@@ -102,7 +109,7 @@
             // 2～4位の得点を-1倍する
             ret[Array.IndexOf(rank, 1)] = -1 * (ret[Array.IndexOf(rank, 2)] + ret[Array.IndexOf(rank, 3)] + ret[Array.IndexOf(rank, 4)]);
             // 1000で割る
-            ret[Array.IndexOf(rank, 1)] /= 1000;
+            //ret[Array.IndexOf(rank, 1)] /= 1000;
 
             // 【共通処理】
             // PriseScoreを足す
@@ -127,35 +134,35 @@
             {
                 case 0:
                     // 四捨五入
-                    for (int i = 0; i <= 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         ret[i] = TypeConverter.Round(score[i], -3);
                     }
                     break;
                 case 1:
                     // 五捨六入
-                    for (int i = 0; i <= 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         ret[i] = TypeConverter.RoundExtra(score[i], -3);
                     }
                     break;
                 case 2:
                     // 返しと得点の差に依拠
-                    for (int i = 0; i <= 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         ret[i] = TypeConverter.RoundBase(score[i], -3);
                     }
                     break;
                 case 3:
                     // 切り捨て
-                    for (int i = 0; i <= 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         ret[i] = TypeConverter.Floor(score[i], -3);
                     }
                     break;
                 case 4:
                     // 切り上げ
-                    for (int i = 0; i <= 4; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         ret[i] = TypeConverter.Ceiling(score[i], -3);
                     }
@@ -163,6 +170,14 @@
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// 対局を保存する
+        /// </summary>
+        public void ExecuteSave(GameType4 game)
+        {
+            ColGame.Add(game);
         }
     }
 }

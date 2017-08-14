@@ -50,6 +50,10 @@
         /// </summary>
         public ObservableCollection<GameSettingType4> ColRule { get; set; }
         /// <summary>
+        /// 対局コレクション
+        /// </summary>
+        public ObservableCollection<GameType4> ColGame { get; set; }
+        /// <summary>
         /// 現在選択されている対局設定
         /// </summary>
         private GameSettingType4 selectedRule;
@@ -87,7 +91,19 @@
         }
         public int EastBaseScore { get; set; }
         public int EastPriseScore { get; set; }
-        public int EastCalcedScore { get; set; }
+        private int eastCalcedScore;
+        public int EastCalcedScore
+        {
+            get
+            {
+                return eastCalcedScore;
+            }
+            set
+            {
+                eastCalcedScore = value;
+                RaisePropertyChanged("EastCalcedScore");
+            }
+        }
         /// <summary>
         /// 選択中の対局者（南家）
         /// </summary>
@@ -106,7 +122,19 @@
         }
         public int SouthBaseScore { get; set; }
         public int SouthPriseScore { get; set; }
-        public int SouthCalcedScore { get; set; }
+        private int southCalcedScore;
+        public int SouthCalcedScore
+        {
+            get
+            {
+                return southCalcedScore;
+            }
+            set
+            {
+                southCalcedScore = value;
+                RaisePropertyChanged("SouthCalcedScore");
+            }
+        }
         /// <summary>
         /// 選択中の対局者（西家）
         /// </summary>
@@ -125,7 +153,19 @@
         }
         public int WestBaseScore { get; set; }
         public int WestPriseScore { get; set; }
-        public int WestCalcedScore { get; set; }
+        private int westCalcedScore;
+        public int WestCalcedScore
+        {
+            get
+            {
+                return westCalcedScore;
+            }
+            set
+            {
+                westCalcedScore = value;
+                RaisePropertyChanged("WestCalcedScore");
+            }
+        }
         /// <summary>
         /// 選択中の対局者（北家）
         /// </summary>
@@ -144,17 +184,26 @@
         }
         public int NorthBaseScore { get; set; }
         public int NorthPriseScore { get; set; }
-        public int NorthCalcedScore { get; set; }
+        private int northCalcedScore;
+        public int NorthCalcedScore
+        {
+            get
+            {
+                return northCalcedScore;
+            }
+            set
+            {
+                northCalcedScore = value;
+                RaisePropertyChanged("NorthCalcedScore");
+            }
+        }
         /// <summary>
         /// 対局クラス
         /// </summary>
         private GameType4 ThisGame;
-        /// <summary>
-        /// 設定オブジェクト
-        /// </summary>
-        public GameSettingType4 Setting { get; set; }
         private static string filePathPlayers = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathPlayers);
         private static string filePathSettings = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathSettings_Type4);
+        private static string filePathGames = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathGames_Type4);
         #endregion
 
         /// <summary>
@@ -165,6 +214,7 @@
             var displayTuple = Load();
             ColPerson = displayTuple.Item1;
             ColRule = displayTuple.Item2;
+            ColGame = displayTuple.Item3;
         }
 
         /// <summary>
@@ -172,7 +222,28 @@
         /// </summary>
         public void CalcGame()
         {
+            // クラスを作って
+            var newGameModel = new NewGameModel()
+            {
+                // オブジェクトを渡して
+                EastBaseScore = EastBaseScore,
+                EastPriseScore = EastPriseScore,
+                SouthBaseScore = SouthBaseScore,
+                SouthPriseScore = SouthPriseScore,
+                WestBaseScore = WestBaseScore,
+                WestPriseScore = WestPriseScore,
+                NorthBaseScore = NorthBaseScore,
+                NorthPriseScore = NorthPriseScore,
+                Setting = SelectedRule
+            };
 
+            // 動かして戻す
+            var ret = newGameModel.ExecuteCalc();
+
+            EastCalcedScore = (int)ret[0];
+            SouthCalcedScore = (int)ret[1];
+            WestCalcedScore = (int)ret[2];
+            NorthCalcedScore = (int)ret[3];
         }
 
         /// <summary>
@@ -181,7 +252,14 @@
         /// <returns></returns>
         public bool CanCalcGame()
         {
-            return false;
+            if (!(SelectedRule is null))
+            {
+                return EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore == SelectedRule.BasePoint * 4;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -189,7 +267,48 @@
         /// </summary>
         public void GenerateGame()
         {
+            var dialogRet = MessageBox.Show("対局を保存します。", "確認", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Information);
+            if (dialogRet == System.Windows.MessageBoxResult.Yes)
+            {
+                // 保存オブジェクトを作る
+                ThisGame = new GameType4()
+                {
+                    GameDate = GameDate,
+                    SettingID = SelectedRule.ID,
+                    East = SelectedPersonEast.ID,
+                    EastScore = EastCalcedScore,
+                    South = SelectedPersonSouth.ID,
+                    SouthScore = SouthCalcedScore,
+                    West = SelectedPersonWest.ID,
+                    WestScore = WestCalcedScore,
+                    North = SelectedPersonNorth.ID,
+                    NorthScore = NorthCalcedScore
+                };
 
+                // クラスを作って
+                var newGameModel = new NewGameModel()
+                {
+                    // オブジェクトを渡して
+                    ColGame = ColGame
+                };
+
+                // 動かして
+                newGameModel.ExecuteSave(ThisGame);
+
+                // 戻す
+                ColGame = newGameModel.ColGame;
+
+                // XMLファイルに保存
+                // ViewModelで読み込むので保存も収まりよくこちらに
+                if (XmlConverter.SerializeFromCol(ColGame, filePathGames))
+                {
+                    // 成功
+                }
+                else
+                {
+                    // 失敗
+                }
+            }
         }
 
         /// <summary>
@@ -198,14 +317,14 @@
         /// <returns></returns>
         public bool CanGenerateGame()
         {
-            return false;
+            return Math.Abs(EastCalcedScore) + Math.Abs(SouthCalcedScore) + Math.Abs(WestCalcedScore) + Math.Abs(NorthCalcedScore) > 0;
         }
 
         /// <summary>
         /// 対局者をXMLから読み込む
         /// </summary>
         /// <returns></returns>
-        private Tuple<ObservableCollection<Person>, ObservableCollection<GameSettingType4>> Load()
+        private Tuple<ObservableCollection<Person>, ObservableCollection<GameSettingType4>, ObservableCollection<GameType4>> Load()
         {
             var ret1 = XmlConverter.DeSerializeToCol<Person>(filePathPlayers);
 
@@ -225,7 +344,7 @@
             }
 
             var ret2 = XmlConverter.DeSerializeToCol<GameSettingType4>(filePathSettings);
-            
+
             if (ret2 is null)
             {
                 ret2 = new ObservableCollection<GameSettingType4>();
@@ -241,7 +360,24 @@
                 }
             }
 
-            var ret = Tuple.Create(ret1, ret2);
+            var ret3 = XmlConverter.DeSerializeToCol<GameType4>(filePathGames);
+
+            if (ret3 is null)
+            {
+                ret3 = new ObservableCollection<GameType4>();
+                // XMLファイルに保存
+                // ViewModelで読み込むので保存も収まりよくこちらに
+                if (XmlConverter.SerializeFromCol(ColGame, filePathGames))
+                {
+                    // 成功
+                }
+                else
+                {
+                    MessageBox.Show("XMLファイルの保存に失敗しました");
+                }
+            }
+
+            var ret = Tuple.Create(ret1, ret2, ret3);
 
             return ret;
         }

@@ -87,7 +87,7 @@
             int ret = 1;
             List<int> IDList = new List<int>();
 
-            foreach (GameSettingType4 rule in ColRule)
+            foreach (var rule in ColRule)
             {
                 IDList.Add(rule.ID);
             }

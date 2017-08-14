@@ -109,11 +109,8 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 東家（得点）
         /// </summary>
-        public int EastBaseScore { get; set; }
-        /// <summary>
-        /// 東家（ボーナス）
-        /// </summary>
-        public int EastPriseScore { get; set; }
+        [XmlElement("EastScore")]
+        public int EastScore { get; set; }
         /// <summary>
         /// 南家ID
         /// </summary>
@@ -122,11 +119,8 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 南家（得点）
         /// </summary>
-        public int SouthBaseScore { get; set; }
-        /// <summary>
-        /// 南家（ボーナス）
-        /// </summary>
-        public int SouthPriseScore { get; set; }
+        [XmlElement("SouthScore")]
+        public int SouthScore { get; set; }
         /// <summary>
         /// 西家ID
         /// </summary>
@@ -135,11 +129,8 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 西家（得点）
         /// </summary>
-        public int WestBaseScore { get; set; }
-        /// <summary>
-        /// 西家（ボーナス）
-        /// </summary>
-        public int WestPriseScore { get; set; }
+        [XmlElement("WestScore")]
+        public int WestScore { get; set; }
         /// <summary>
         /// 北家ID
         /// </summary>
@@ -148,11 +139,8 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 北家（得点）
         /// </summary>
-        public int NorthBaseScore { get; set; }
-        /// <summary>
-        /// 北家（ボーナス）
-        /// </summary>
-        public int NorthPriseScore { get; set; }
+        [XmlElement("NorthScore")]
+        public int NorthScore { get; set; }
     }
 
     /// <summary>

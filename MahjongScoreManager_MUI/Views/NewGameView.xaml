@@ -89,7 +89,7 @@
                                     <TextBlock Text="{Binding Path=SelectedPersonEast.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=EastCalcedScore}" HorizontalAlignment="Center"/>
                                 </Grid>
                             </Grid>
 
@@ -107,7 +107,7 @@
                                     <TextBlock Text="{Binding Path=SelectedPersonSouth.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=SouthCalcedScore}" HorizontalAlignment="Center"/>
                                 </Grid>
                             </Grid>
 
@@ -125,7 +125,7 @@
                                     <TextBlock Text="{Binding Path=SelectedPersonWest.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=WestCalcedScore}" HorizontalAlignment="Center"/>
                                 </Grid>
                             </Grid>
 
@@ -143,7 +143,7 @@
                                     <TextBlock Text="{Binding Path=SelectedPersonNorth.Name}" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="0" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=NorthCalcedScore}" HorizontalAlignment="Center"/>
                                 </Grid>
                             </Grid>
                         </StackPanel>
