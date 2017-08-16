@@ -1,5 +1,6 @@
 ﻿namespace MahjongScoreManager_MUI.Common
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Xml.Serialization;
