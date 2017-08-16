@@ -148,7 +148,7 @@
                             <Grid Grid.Column="1" Grid.Row="0" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="東" FontSize="24"/>
-                                    <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
                                     <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
@@ -159,7 +159,7 @@
                             <Grid Grid.Column="2" Grid.Row="1" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="南" FontSize="24"/>
-                                    <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
                                     <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
@@ -170,7 +170,7 @@
                             <Grid Grid.Column="1" Grid.Row="2" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="西" FontSize="24"/>
-                                    <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
                                     <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
@@ -181,7 +181,7 @@
                             <Grid Grid.Column="0" Grid.Row="1" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="北" FontSize="24"/>
-                                    <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
                                     <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
@@ -236,10 +236,11 @@
                 <!--対局設定グリッド-->
                 <Grid Grid.Column="1" Margin="5">
                     <StackPanel Orientation="Vertical">
+                        <Button x:Name="btnReloadCollections" Content="対局者・設定を更新" Margin="0,0,0,10" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=ReloadCommand}"/>
                         <TextBlock Text="対局日" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
                         <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}" Margin="10,0,0,10"/>
                         <TextBlock Text="対局設定" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
-                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" Margin="10,0,0,10"/>
+                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" Margin="10,0,0,10"/>
                         <Grid Margin="10,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>

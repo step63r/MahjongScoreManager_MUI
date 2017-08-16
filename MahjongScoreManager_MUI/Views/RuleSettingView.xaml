@@ -140,37 +140,37 @@
                     <TextBlock Text="設定名称" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,5">
-                    <TextBox x:Name="txtName" Text="{Binding Path=SelectedRule.Name, UpdateSourceTrigger=PropertyChanged}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtName" Text="{Binding Path=SelectedRule.Name}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="レート" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,5">
-                    <TextBox x:Name="txtRate" Text="{Binding Path=SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtRate" Text="{Binding Path=SelectedRule.Rate, StringFormat={}{0:N2}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="2" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="配給原点" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,5">
-                    <TextBox x:Name="txtBasePoint" Text="{Binding Path=SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtBasePoint" Text="{Binding Path=SelectedRule.BasePoint, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="返し" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,0,5">
-                    <TextBox x:Name="txtReturnPoint" Text="{Binding Path=SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtReturnPoint" Text="{Binding Path=SelectedRule.ReturnPoint, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="4" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="ウマ（3位→2位）" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="4" Grid.Column="1" Margin="0,0,0,5">
-                    <TextBox x:Name="txtPrise3To2" Text="{Binding Path=SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtPrise3To2" Text="{Binding Path=SelectedRule.Prise3To2, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="5" Grid.Column="0" Margin="0,0,0,5">
                     <TextBlock Text="ウマ（4位→1位）" Style="{DynamicResource ContentTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="5" Grid.Column="1" Margin="0,0,0,5">
-                    <TextBox x:Name="txtPrise4To1" Text="{Binding Path=SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                    <TextBox x:Name="txtPrise4To1" Text="{Binding Path=SelectedRule.Prise4To1, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
                 </Grid>
                 <Grid Grid.Row="6" Grid.Column="0">
                     <TextBlock Text="端数の取り扱い" Style="{DynamicResource ContentTextStyle}"/>

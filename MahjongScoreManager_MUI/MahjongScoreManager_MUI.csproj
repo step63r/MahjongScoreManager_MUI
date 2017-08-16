@@ -61,6 +61,7 @@
     <Compile Include="Behaviors\TextBoxGotFocusBehavior.cs" />
     <Compile Include="Common\MessageBoxTrigger.cs" />
     <Compile Include="Common\PropertyChangedEventHandlerExtensions.cs" />
+    <Compile Include="Common\SaveWindowHelper.cs" />
     <Compile Include="Common\XamlConverter.cs" />
     <Compile Include="Models\GameResultModel.cs" />
     <Compile Include="Models\NewGameModel.cs" />

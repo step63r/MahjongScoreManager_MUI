@@ -42,17 +42,68 @@
             }
         }
         /// <summary>
+        /// 「対局者・設定を更新」コマンド
+        /// </summary>
+        private DelegateCommand reloadCommand;
+        public DelegateCommand ReloadCommand
+        {
+            get
+            {
+                if (reloadCommand == null)
+                {
+                    reloadCommand = new DelegateCommand(Reload, CanReload);
+                }
+                return reloadCommand;
+            }
+        }
+        /// <summary>
         /// 対局者コレクション
         /// </summary>
-        public ObservableCollection<Person> ColPerson { get; set; }
+        private ObservableCollection<Person> colPerson;
+        public ObservableCollection<Person> ColPerson
+        {
+            get
+            {
+                return colPerson;
+            }
+            set
+            {
+                colPerson = value;
+                RaisePropertyChanged("ColPerson");
+            }
+        }
         /// <summary>
         /// 対局設定コレクション
         /// </summary>
-        public ObservableCollection<GameSettingType4> ColRule { get; set; }
+        private ObservableCollection<GameSettingType4> colRule;
+        public ObservableCollection<GameSettingType4> ColRule
+        {
+            get
+            {
+                return colRule;
+            }
+            set
+            {
+                colRule = value;
+                RaisePropertyChanged("ColRule");
+            }
+        }
         /// <summary>
         /// 対局コレクション
         /// </summary>
-        public ObservableCollection<GameType4> ColGame { get; set; }
+        private ObservableCollection<GameType4> colGame;
+        public ObservableCollection<GameType4> ColGame
+        {
+            get
+            {
+                return colGame;
+            }
+            set
+            {
+                colGame = value;
+                RaisePropertyChanged("ColGame");
+            }
+        }
         /// <summary>
         /// 現在選択されている対局設定
         /// </summary>
@@ -204,6 +255,10 @@
         private static string filePathPlayers = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathPlayers);
         private static string filePathSettings = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathSettings_Type4);
         private static string filePathGames = string.Format("{0}/{1}", FilePath.BaseDir, FilePath.XmlPathGames_Type4);
+        /// <summary>
+        /// 計算済みオブジェクト
+        /// </summary>
+        private Tuple<Tuple<Person, int, int>, Tuple<Person, int, int>, Tuple<Person, int, int>, Tuple<Person, int, int>, int> SavedObject;
         #endregion
 
         /// <summary>
@@ -244,6 +299,14 @@
             SouthCalcedScore = (int)ret[1];
             WestCalcedScore = (int)ret[2];
             NorthCalcedScore = (int)ret[3];
+
+            // 計算済みオブジェクトに格納
+            SavedObject = Tuple.Create(
+                Tuple.Create(SelectedPersonEast, EastBaseScore, EastPriseScore),
+                Tuple.Create(SelectedPersonSouth, SouthBaseScore, SouthPriseScore),
+                Tuple.Create(SelectedPersonWest, WestBaseScore, WestPriseScore),
+                Tuple.Create(SelectedPersonNorth, NorthBaseScore, NorthPriseScore),
+                SelectedRule.ID);
         }
 
         /// <summary>
@@ -317,7 +380,40 @@
         /// <returns></returns>
         public bool CanGenerateGame()
         {
-            return Math.Abs(EastCalcedScore) + Math.Abs(SouthCalcedScore) + Math.Abs(WestCalcedScore) + Math.Abs(NorthCalcedScore) > 0;
+            return (Math.Abs(EastCalcedScore) + Math.Abs(SouthCalcedScore) + Math.Abs(WestCalcedScore) + Math.Abs(NorthCalcedScore) > 0) &&
+                SavedObject.Item1.Item1 == SelectedPersonEast &&
+                SavedObject.Item1.Item2 == EastBaseScore &&
+                SavedObject.Item1.Item3 == EastPriseScore &&
+                SavedObject.Item2.Item1 == SelectedPersonSouth &&
+                SavedObject.Item2.Item2 == SouthBaseScore &&
+                SavedObject.Item2.Item3 == SouthPriseScore &&
+                SavedObject.Item3.Item1 == SelectedPersonWest &&
+                SavedObject.Item3.Item2 == WestBaseScore &&
+                SavedObject.Item3.Item3 == WestPriseScore &&
+                SavedObject.Item4.Item1 == SelectedPersonNorth &&
+                SavedObject.Item4.Item2 == NorthBaseScore &&
+                SavedObject.Item4.Item3 == NorthPriseScore &&
+                SavedObject.Item5 == SelectedRule.ID;
+        }
+
+        /// <summary>
+        /// 設定更新のコマンド実行
+        /// </summary>
+        public void Reload()
+        {
+            var displayTuple = Load();
+            ColPerson = displayTuple.Item1;
+            ColRule = displayTuple.Item2;
+            ColGame = displayTuple.Item3;
+        }
+
+        /// <summary>
+        /// 設定更新が実行可能かどうかを判定
+        /// </summary>
+        /// <returns></returns>
+        public bool CanReload()
+        {
+            return true;
         }
 
         /// <summary>
