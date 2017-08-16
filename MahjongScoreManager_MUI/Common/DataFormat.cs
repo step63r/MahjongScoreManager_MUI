@@ -12,27 +12,27 @@ namespace MahjongScoreManager_MUI.Common
         /// <summary>
         /// 基底ディレクトリ
         /// </summary>
-        public const string BaseDir = "./xml";
+        public static string BaseDir = String.Format("{0}/MahjongScoreManager/xml", Environment.SpecialFolder.CommonApplicationData);
         /// <summary>
         /// 対局者XMLファイルパス
         /// </summary>
-        public const string XmlPathPlayers = "players.xml";
+        public static string XmlPathPlayers = "players.xml";
         /// <summary>
         /// 試合データ（4人打ち）XMLファイルパス
         /// </summary>
-        public const string XmlPathGames_Type4 = "games_type4.xml";
+        public static string XmlPathGames_Type4 = "games_type4.xml";
         /// <summary>
         /// 対局設定（4人打ち）XMLファイルパス
         /// </summary>
-        public const string XmlPathSettings_Type4 = "settings_type4.xml";
+        public static string XmlPathSettings_Type4 = "settings_type4.xml";
         /// <summary>
         /// 試合データ（3人打ち）XMLファイルパス
         /// </summary>
-        public const string XmlPathGames_Type3 = "games_type3.xml";
+        public static string XmlPathGames_Type3 = "games_type3.xml";
         /// <summary>
         /// 対局設定（3人打ち）XMLファイルパス
         /// </summary>
-        public const string XmlPathSettings_Type3 = "settings_type3.xml";
+        public static string XmlPathSettings_Type3 = "settings_type3.xml";
     }
 
     /// <summary>
