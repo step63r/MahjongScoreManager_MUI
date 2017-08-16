@@ -6,12 +6,12 @@ using System.Windows.Media;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MahjongScoreManager_MUI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("麻雀スコア管理ツール")]
+[assembly: AssemblyDescription("麻雀の得点を計算、保存、集計するツールです。")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("minato project")]
 [assembly: AssemblyProduct("MahjongScoreManager_MUI")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright © 2017 step63r")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,5 +37,5 @@ using System.Windows.Media;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2017.8.16.0")]
+[assembly: AssemblyFileVersion("2017.8.16.0")]

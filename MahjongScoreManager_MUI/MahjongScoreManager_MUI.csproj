@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MahjongScoreManager_MUI</RootNamespace>
-    <AssemblyName>MahjongScoreManager_MUI</AssemblyName>
+    <AssemblyName>麻雀スコア管理ツール</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -58,16 +58,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviors\TextBoxGotFocusBehavior.cs" />
     <Compile Include="Common\MessageBoxTrigger.cs" />
     <Compile Include="Common\PropertyChangedEventHandlerExtensions.cs" />
     <Compile Include="Common\XamlConverter.cs" />
+    <Compile Include="Models\GameResultModel.cs" />
     <Compile Include="Models\NewGameModel.cs" />
     <Compile Include="Models\PlayerSettingModel.cs" />
     <Compile Include="Models\RuleSettingModel.cs" />
+    <Compile Include="ViewModels\GameResultViewModel.cs" />
     <Compile Include="ViewModels\HandleFractionViewModel.cs" />
     <Compile Include="ViewModels\NewGameViewModel.cs" />
     <Compile Include="ViewModels\PlayerSettingViewModel.cs" />
     <Compile Include="ViewModels\RuleSettingViewModel.cs" />
+    <Compile Include="Views\GameResultView.xaml.cs">
+      <DependentUpon>GameResultView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewGameView.xaml.cs">
       <DependentUpon>NewGameView.xaml</DependentUpon>
     </Compile>
@@ -80,6 +86,10 @@
     <Compile Include="Views\SettingsPageView.xaml.cs">
       <DependentUpon>SettingsPageView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Assets\ModernUI.MahjongTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +120,10 @@
     </Compile>
     <Compile Include="Pages\Settings\AppearanceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Page Include="Views\GameResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\NewGameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

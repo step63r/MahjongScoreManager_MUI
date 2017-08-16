@@ -321,7 +321,7 @@
         }
 
         /// <summary>
-        /// 対局者をXMLから読み込む
+        /// データをXMLから読み込む
         /// </summary>
         /// <returns></returns>
         private Tuple<ObservableCollection<Person>, ObservableCollection<GameSettingType4>, ObservableCollection<GameType4>> Load()

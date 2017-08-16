@@ -12,8 +12,96 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <common:EnumToStringConverter x:Key="EnumToString"/>
+        <Style x:Key="BaseScoreStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2,1,1,1"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" RenderOptions.ClearTypeHint="Enabled" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Accent}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsReadOnly" Value="False"/>
+                                    <Condition Property="IsEnabled" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="{DynamicResource InputBackgroundHover}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource InputBorderHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextHover}"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#007b43"/>
+        </Style>
+        <Style x:Key="ResultTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <ControlTemplate x:Key="ButtonStyle" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#d6e9ca"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#93ca76"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <!--<Setter Property="Background" TargetName="border" Value="#d6e9ca"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </UserControl.Resources>
-    
+
     <!--ViewModelクラス-->
     <UserControl.DataContext>
         <vm:NewGameViewModel/>
@@ -44,139 +132,180 @@
                     </Grid.RowDefinitions>
                     <!--対局結果グリッド-->
                     <Grid Grid.Row="0" Margin="5">
-                        <StackPanel Orientation="Vertical">
-                            <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}"/>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="東家"/>
-                                <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="南家"/>
-                                <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="西家"/>
-                                <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="北家"/>
-                                <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="0"/>
-                                <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="得点"/>
-                                <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" behavior:PlaceHolderBehavior.PlaceHolderText="その他収支"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <!--席順っぽくするグリッド-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--東家-->
+                            <Grid Grid.Column="1" Grid.Row="0" Margin="5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="東" FontSize="24"/>
+                                    <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--南家-->
+                            <Grid Grid.Column="2" Grid.Row="1" Margin="5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="南" FontSize="24"/>
+                                    <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--西家-->
+                            <Grid Grid.Column="1" Grid.Row="2" Margin="5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="西" FontSize="24"/>
+                                    <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--北家-->
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="北" FontSize="24"/>
+                                    <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                                    <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
+                                    <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <!--計算結果グリッド-->
-                    <Grid Grid.Row="1" Margin="5">
-                        <StackPanel Orientation="Horizontal">
-                            <!--東家-->
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="{Binding Path=SelectedPersonEast.Name}" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="{Binding Path=EastCalcedScore}" HorizontalAlignment="Center"/>
-                                </Grid>
-                            </Grid>
-
-                            <!--南家-->
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="{Binding Path=SelectedPersonSouth.Name}" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="{Binding Path=SouthCalcedScore}" HorizontalAlignment="Center"/>
-                                </Grid>
-                            </Grid>
-
-                            <!--西家-->
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="{Binding Path=SelectedPersonWest.Name}" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="{Binding Path=WestCalcedScore}" HorizontalAlignment="Center"/>
-                                </Grid>
-                            </Grid>
-
-                            <!--北家-->
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-                                    <TextBlock Text="{Binding Path=SelectedPersonNorth.Name}" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <Grid Grid.Column="0" Grid.Row="1">
-                                    <TextBlock Text="{Binding Path=NorthCalcedScore}" HorizontalAlignment="Center"/>
-                                </Grid>
-                            </Grid>
-                        </StackPanel>
+                    <Grid Grid.Row="1" Margin="5,20,25,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <!--東家-->
+                        <Grid Grid.Column="0" Grid.Row="0">
+                            <TextBlock Text="{Binding Path=SelectedPersonEast.Name}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <TextBlock Text="{Binding Path=EastCalcedScore}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <!--南家-->
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <TextBlock Text="{Binding Path=SelectedPersonSouth.Name}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="{Binding Path=SouthCalcedScore}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <!--西家-->
+                        <Grid Grid.Column="2" Grid.Row="0">
+                            <TextBlock Text="{Binding Path=SelectedPersonWest.Name}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <Grid Grid.Column="2" Grid.Row="1">
+                            <TextBlock Text="{Binding Path=WestCalcedScore}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <!--北家-->
+                        <Grid Grid.Column="3" Grid.Row="0">
+                            <TextBlock Text="{Binding Path=SelectedPersonNorth.Name}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
+                        <Grid Grid.Column="3" Grid.Row="1">
+                            <TextBlock Text="{Binding Path=NorthCalcedScore}" Style="{DynamicResource ResultTextStyle}"/>
+                        </Grid>
                     </Grid>
                 </Grid>
 
                 <!--対局設定グリッド-->
                 <Grid Grid.Column="1" Margin="5">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="対局設定"/>
-                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0"/>
-
-                        <TextBlock Text="レート"/>
-                        <TextBlock Text="{Binding SelectedRule.Rate, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
-                        <TextBlock Text="配給原点"/>
-                        <TextBlock Text="{Binding SelectedRule.BasePoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
-                        <TextBlock Text="返し"/>
-                        <TextBlock Text="{Binding SelectedRule.ReturnPoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
-                        <TextBlock Text="ウマ（3→2）"/>
-                        <TextBlock Text="{Binding SelectedRule.Prise3To2, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
-                        <TextBlock Text="ウマ（4→1）"/>
-                        <TextBlock Text="{Binding SelectedRule.Prise4To1, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
-                        <TextBlock Text="端数取扱"/>
-                        <!--コンバータが必要-->
-                        <TextBlock Text="{Binding SelectedRule.Fraction, Converter={StaticResource EnumToString}}" Margin="5,0,0,0"/>
+                        <TextBlock Text="対局日" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
+                        <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}" Margin="10,0,0,10"/>
+                        <TextBlock Text="対局設定" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
+                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" Margin="10,0,0,10"/>
+                        <Grid Margin="10,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="レート"/>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Rate, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <TextBlock Text="配給原点"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.BasePoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="返し"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.ReturnPoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="0">
+                                <TextBlock Text="ウマ（3→2）"/>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Prise3To2, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="0">
+                                <TextBlock Text="ウマ（4→1）"/>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Prise4To1, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="0">
+                                <TextBlock Text="端数取扱"/>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="1">
+                                <!--コンバータが必要-->
+                                <TextBlock Text="{Binding SelectedRule.Fraction, Converter={StaticResource EnumToString}}" Margin="5,0,0,0"/>
+                            </Grid>
+                        </Grid>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
-                    <StackPanel>
-                        <Button x:Name="btnCalcGame" Content="計算" Command="{Binding Path=CalcGameCommand}"/>
-                        <Button x:Name="btnGenerateGame" Content="保存" Command="{Binding Path=GenerateGameCommand}"/>
-                    </StackPanel>
-                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="5,0,5,0">
+                            <Button x:Name="btnCalcGame" Content="計算" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=CalcGameCommand}"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="5,0,5,0">
+                            <Button x:Name="btnGenerateGame" Content="保存" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=GenerateGameCommand}"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </ScrollViewer>

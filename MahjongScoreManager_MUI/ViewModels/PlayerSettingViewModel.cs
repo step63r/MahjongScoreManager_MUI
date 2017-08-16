@@ -135,8 +135,7 @@
         /// <returns>対局者が選択されていればtrue</returns>
         private bool CanRemovePlayerExecute()
         {
-            //return SelectedPlayer != null;
-            return false;
+            return SelectedPlayer != null;
         }
 
         /// <summary>

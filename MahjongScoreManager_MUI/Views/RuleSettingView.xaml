@@ -4,11 +4,99 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:behavior="clr-namespace:MahjongScoreManager_MUI.Behaviors"
              xmlns:vm="clr-namespace:MahjongScoreManager_MUI.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="BaseScoreStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2,1,1,1"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" RenderOptions.ClearTypeHint="Enabled" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Accent}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsReadOnly" Value="False"/>
+                                    <Condition Property="IsEnabled" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="{DynamicResource InputBackgroundHover}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource InputBorderHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextHover}"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#007b43"/>
+        </Style>
+        <ControlTemplate x:Key="ButtonStyle" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#d6e9ca"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#93ca76"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <!--<Setter Property="Background" TargetName="border" Value="#d6e9ca"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
     <!--ViewModelクラス-->
     <UserControl.DataContext>
         <vm:RuleSettingViewModel/>
@@ -20,32 +108,95 @@
             <common:MessageBoxAction />
         </common:MessageBoxTrigger>
     </i:Interaction.Triggers>
-    
+
     <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <TextBlock Text="対局設定" Style="{StaticResource Heading2}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5">
+            <StackPanel>
+                <TextBlock Text="登録されている対局設定" Style="{DynamicResource ContentTextStyle}"/>
                 <ListBox x:Name="listRule" ItemsSource="{Binding Path=ColRule, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" MinHeight="100"/>
-                <!--上手くバインドできていない-->
-                <!--クラスとバインドしない方がいい？-->
-                <TextBlock Text="設定名称"/>
-                <TextBox x:Name="txtName" Text="{Binding Path=SelectedRule.Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock Text="レート" />
-                <TextBox x:Name="txtRate" Text="{Binding Path=SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
-                <TextBlock Text="配給原点" />
-                <TextBox x:Name="txtBasePoint" Text="{Binding Path=SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
-                <TextBlock Text="返し" />
-                <TextBox x:Name="txtReturnPoint" Text="{Binding Path=SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
-                <TextBlock Text="ウマ（3位→2位）" />
-                <TextBox x:Name="txtPrise3To2" Text="{Binding Path=SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
-                <TextBlock Text="ウマ（4位→1位）" />
-                <TextBox x:Name="txtPrise4To1" Text="{Binding Path=SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"/>
-                <TextBlock Text="端数の取り扱い" />
-                <ComboBox x:Name="cmbFraction" ItemsSource="{Binding HandleFractions}" DisplayMemberPath="Label" SelectedIndex="{Binding Path=SelectedRule.Fraction}"/>
-                <Button x:Name="btnAddNew" Content="新規登録" Command="{Binding Path=CreateNewCommand}"/>
-                <Button x:Name="btnUpdate" Content="更新" Command="{Binding Path=AddCommand}"/>
-                <Button x:Name="btnDelete" Content="削除" Command="{Binding Path=RemoveCommand}"/>
             </StackPanel>
-        </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="設定名称" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,5">
+                    <TextBox x:Name="txtName" Text="{Binding Path=SelectedRule.Name, UpdateSourceTrigger=PropertyChanged}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="レート" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,5">
+                    <TextBox x:Name="txtRate" Text="{Binding Path=SelectedRule.Rate, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="配給原点" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,5">
+                    <TextBox x:Name="txtBasePoint" Text="{Binding Path=SelectedRule.BasePoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="返し" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,0,5">
+                    <TextBox x:Name="txtReturnPoint" Text="{Binding Path=SelectedRule.ReturnPoint, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="ウマ（3位→2位）" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="1" Margin="0,0,0,5">
+                    <TextBox x:Name="txtPrise3To2" Text="{Binding Path=SelectedRule.Prise3To2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="0" Margin="0,0,0,5">
+                    <TextBlock Text="ウマ（4位→1位）" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="1" Margin="0,0,0,5">
+                    <TextBox x:Name="txtPrise4To1" Text="{Binding Path=SelectedRule.Prise4To1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                </Grid>
+                <Grid Grid.Row="6" Grid.Column="0">
+                    <TextBlock Text="端数の取り扱い" Style="{DynamicResource ContentTextStyle}"/>
+                </Grid>
+                <Grid Grid.Row="6" Grid.Column="1" Margin="10,0,0,0">
+                    <ComboBox x:Name="cmbFraction" ItemsSource="{Binding HandleFractions}" DisplayMemberPath="Label" SelectedIndex="{Binding Path=SelectedRule.Fraction}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="0,0,5,0">
+                    <Button x:Name="btnAddNew" Content="新規登録" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=CreateNewCommand}"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Button x:Name="btnUpdate" Content="更新" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=AddCommand}"/>
+                </Grid>
+                <Grid Grid.Column="2" Margin="5,0,0,0">
+                    <Button x:Name="btnDelete" Content="削除" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=RemoveCommand}"/>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

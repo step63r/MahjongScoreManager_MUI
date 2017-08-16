@@ -340,4 +340,34 @@ namespace MahjongScoreManager_MUI.Common
         /// </summary>
         切り上げ
     }
+
+    /// <summary>
+    /// DataGridに表示する検索結果クラス
+    /// </summary>
+    public class DataGridResult : INotifyPropertyChanged
+    {
+        // イベントだけ実装しておく。OnPropertyChangedは使わない
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 対局者ID（非表示）
+        /// </summary>
+        public int ID { get; set; }
+        /// <summary>
+        /// 名前
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 対局数
+        /// </summary>
+        public int GameCount { get; set; }
+        /// <summary>
+        /// 総得点
+        /// </summary>
+        public long TotalScore { get; set; }
+        /// <summary>
+        /// 総得点（レート換算）
+        /// </summary>
+        public double TotalScoreRate { get; set; }
+    }
 }

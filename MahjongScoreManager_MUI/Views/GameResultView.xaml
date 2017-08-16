@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="MahjongScoreManager_MUI.Views.PlayerSettingView"
+﻿<UserControl x:Class="MahjongScoreManager_MUI.Views.GameResultView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:behavior="clr-namespace:MahjongScoreManager_MUI.Behaviors"
              xmlns:vm="clr-namespace:MahjongScoreManager_MUI.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
@@ -49,7 +50,7 @@
 
     <!--ViewModelクラス-->
     <UserControl.DataContext>
-        <vm:PlayerSettingViewModel/>
+        <vm:GameResultViewModel/>
     </UserControl.DataContext>
 
     <!--メッセージボックス表示トリガー-->
@@ -60,33 +61,64 @@
     </i:Interaction.Triggers>
 
     <Grid Style="{StaticResource ContentRoot}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="5">
-            <StackPanel>
-                <TextBlock Text="登録されている対局者" Style="{DynamicResource ContentTextStyle}"/>
-                <ListBox x:Name="listPlayer" ItemsSource="{Binding Path=ColPerson}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPlayer}" SelectedIndex="0" MinHeight="100"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1" Margin="5">
-            <TextBox x:Name="txtInput" Text="{Binding Path=InputName}"/>
-        </Grid>
-        <Grid Grid.Row="2" Margin="5">
+        <ScrollViewer>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="0,0,5,0">
-                    <Button x:Name="btnAddPlayer" Content="追加" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=AddCommand}"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--日付指定グリッド-->
+                <Grid Grid.Row="0" Margin="5">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="集計期間" Style="{DynamicResource ContentTextStyle}"/>
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <DatePicker x:Name="findFrom" Width="120" SelectedDate="{Binding Path=FindFrom}"/>
+                            <TextBlock Text="～" Margin="10,0,10,0"/>
+                            <DatePicker x:Name="findTo" Width="120" SelectedDate="{Binding Path=FindTo}"/>
+                            <Button x:Name="btnExecute" Content="検索" Width="100" Margin="10,0,0,0" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=ExecuteCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
                 </Grid>
-                <Grid Grid.Column="1" Margin="5,0,0,0">
-                    <Button x:Name="btnDelete" Content="選択を削除" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=RemoveCommand}"/>
+                <!--結果グリッド-->
+                <Grid Grid.Row="1" Margin="5">
+                    <DataGrid x:Name="dgResult" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=ColResult}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名前" Width="2*" Binding="{Binding Name}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="対局数" Width="2*" Binding="{Binding GameCount, StringFormat={}{0:N0}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="総得点" Width="3*" Binding="{Binding TotalScore, StringFormat={}{0:N0}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="レート" Width="3*" Binding="{Binding TotalScoreRate, StringFormat={}{0:N2}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
                 </Grid>
             </Grid>
-        </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>
