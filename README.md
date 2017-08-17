@@ -1,26 +1,19 @@
 # 麻雀スコア管理ツール
 ![キャプチャ１](./MahjongScoreManager_MUI/Readme/20170816001.png)
 ## Overview
----
 麻雀の得点を計算、保存、集計するツールです。  
 対局ごとにルールを設定できるのが特長です。
 
-## Description
----
-
 ## Requirement
----
  * Windows 10 Home 
  * NET Framework 4.5.2 以上
 
  ## Install
- ---
  こちらで配布しています。  
  <http://projectstep.web.fc2.com/computer/csp/progs.html>  
  インストーラを実行し、その指示に従ってください。
 
  ## Usage
- ---
  ### 新規対局
  点棒状況からスコアを計算します。
 
@@ -85,6 +78,6 @@
 </dl>
 
 ## History
-| Revision |Updates |
+| Revision | Updates |
 |:---------------:|:-----------------|
 | 2017.8.16.0 | β版リリース |
