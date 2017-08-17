@@ -144,9 +144,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Readme\Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Settings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Readme\20170816001.png" />
+    <Content Include="Readme\20170816002.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
