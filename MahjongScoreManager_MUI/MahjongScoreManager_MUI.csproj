@@ -144,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Readme\Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Settings\" />
