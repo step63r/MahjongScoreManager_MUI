@@ -1,5 +1,5 @@
 # 麻雀スコア管理ツール
-![キャプチャ１](./Readme/20170816001.png)
+![キャプチャ１](./MahjongScoreManager_MUI/Readme/20170816001.png)
 ## Overview
 ---
 麻雀の得点を計算、保存、集計するツールです。  
