@@ -142,15 +142,30 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
+                            <!--過不足表示-->
+                            <Grid Grid.Column="1" Grid.Row="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="10">
+                                        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Path=CountOverFlow.Item1}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="10">
+                                        <TextBlock FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Path=CountOverFlow.Item2}"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                             <!--東家-->
                             <Grid Grid.Column="1" Grid.Row="0" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="東" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonEast" Text="{Binding Path=EastBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                 </StackPanel>
                             </Grid>
                             <!--南家-->
@@ -159,9 +174,9 @@
                                     <TextBlock Text="南" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonSouth" Text="{Binding Path=SouthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                 </StackPanel>
                             </Grid>
                             <!--西家-->
@@ -170,9 +185,9 @@
                                     <TextBlock Text="西" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonWest" Text="{Binding Path=WestBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                 </StackPanel>
                             </Grid>
                             <!--北家-->
@@ -181,9 +196,9 @@
                                     <TextBlock Text="北" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
                                     <TextBlock Text="得点" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonNorth" Text="{Binding Path=NorthBaseScore, StringFormat={}{0:N0} 点}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                     <TextBlock Text="その他収支" Style="{DynamicResource ContentTextStyle}"/>
-                                    <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True"/>
+                                    <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>

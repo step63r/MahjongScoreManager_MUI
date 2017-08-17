@@ -249,6 +249,22 @@
             }
         }
         /// <summary>
+        /// 過不足チェック用
+        /// </summary>
+        private Tuple<string, string> countOverFlow;
+        public Tuple<string, string> CountOverFlow
+        {
+            get
+            {
+                return countOverFlow;
+            }
+            set
+            {
+                countOverFlow = value;
+                RaisePropertyChanged("CountOverFlow");
+            }
+        }
+        /// <summary>
         /// 対局クラス
         /// </summary>
         private GameType4 ThisGame;
@@ -317,10 +333,28 @@
         {
             if (!(SelectedRule is null))
             {
-                return EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore == SelectedRule.BasePoint * 4;
+                // 過不足チェック
+                if (EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore == SelectedRule.BasePoint * 4)
+                {
+                    CountOverFlow = Tuple.Create("", "");
+                }
+                else if(EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore > SelectedRule.BasePoint * 4)
+                {
+                    // 超過
+                    CountOverFlow = Tuple.Create(String.Format("{0:#,0} 点", (EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore) - (SelectedRule.BasePoint * 4)), "超過");
+                }
+                else
+                {
+                    // 不足
+                    CountOverFlow = Tuple.Create(String.Format("{0:#,0} 点", (SelectedRule.BasePoint * 4) - (EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore)), "不足");
+                }
+
+                return EastBaseScore + SouthBaseScore + WestBaseScore + NorthBaseScore == SelectedRule.BasePoint * 4 &&
+                    SelectedPersonEast != null && SelectedPersonSouth != null && SelectedPersonWest != null && SelectedPersonNorth != null;
             }
             else
             {
+                CountOverFlow = Tuple.Create("", "");
                 return false;
             }
         }

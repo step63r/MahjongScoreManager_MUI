@@ -58,6 +58,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviors\TextBoxBehavior.cs" />
     <Compile Include="Behaviors\TextBoxGotFocusBehavior.cs" />
     <Compile Include="Common\MessageBoxTrigger.cs" />
     <Compile Include="Common\PropertyChangedEventHandlerExtensions.cs" />
