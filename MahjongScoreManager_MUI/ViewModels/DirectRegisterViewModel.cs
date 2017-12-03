@@ -225,17 +225,17 @@
                 };
 
                 // クラスを作って
-                var newGameModel = new NewGameModel()
+                var directRegisterModel = new DirectRegisterModel()
                 {
                     // オブジェクトを渡して
                     ColGame = ColGame
                 };
 
                 // 動かして
-                newGameModel.ExecuteSave(ThisGame);
+                directRegisterModel.ExecuteSave(ThisGame);
 
                 // 戻す
-                ColGame = newGameModel.ColGame;
+                ColGame = directRegisterModel.ColGame;
 
                 // XMLファイルに保存
                 // ViewModelで読み込むので保存も収まりよくこちらに

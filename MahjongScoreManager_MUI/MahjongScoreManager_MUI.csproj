@@ -67,6 +67,7 @@
     <Compile Include="Common\PropertyChangedEventHandlerExtensions.cs" />
     <Compile Include="Common\SaveWindowHelper.cs" />
     <Compile Include="Common\XamlConverter.cs" />
+    <Compile Include="Models\DirectRegisterModel.cs" />
     <Compile Include="Models\GameResultModel.cs" />
     <Compile Include="Models\NewGameModel.cs" />
     <Compile Include="Models\PlayerSettingModel.cs" />
