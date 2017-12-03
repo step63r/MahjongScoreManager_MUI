@@ -68,7 +68,8 @@ namespace MahjongScoreManager_MUI.Behaviors
 
             if ((Key.D0 <= e.Key && e.Key <= Key.D9) ||
                 (Key.NumPad0 <= e.Key && e.Key <= Key.NumPad9) ||
-                (Key.Delete == e.Key) || (Key.Back == e.Key) || (Key.Tab == e.Key))
+                (Key.Delete == e.Key) || (Key.Back == e.Key) || (Key.Tab == e.Key) || 
+                (Key.OemMinus == e.Key))
             {
                 e.Handled = false;
             }

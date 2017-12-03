@@ -21,6 +21,7 @@
         <mui:LinkGroup DisplayName="麻雀スコア管理ツール">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="新規対局" Source="/Views/NewGameView.xaml" />
+                <mui:Link DisplayName="スコア登録" Source="/Views/DirectRegisterView.xaml" />
                 <mui:Link DisplayName="対局情報参照" Source="/Views/GameResultView.xaml" />
                 <mui:Link DisplayName="対局者変更" Source="/Views/PlayerSettingView.xaml" />
                 <mui:Link DisplayName="対局設定" Source="/Views/RuleSettingView.xaml" />

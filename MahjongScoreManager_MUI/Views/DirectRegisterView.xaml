@@ -1,0 +1,257 @@
+﻿<UserControl x:Class="MahjongScoreManager_MUI.Views.DirectRegisterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:behavior="clr-namespace:MahjongScoreManager_MUI.Behaviors"
+             xmlns:vm="clr-namespace:MahjongScoreManager_MUI.ViewModels"
+             xmlns:common="clr-namespace:MahjongScoreManager_MUI.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <common:EnumToStringConverter x:Key="EnumToString"/>
+        <Style x:Key="BaseScoreStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2,1,1,1"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" RenderOptions.ClearTypeHint="Enabled" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsReadOnly" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextDisabled}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Accent}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsReadOnly" Value="False"/>
+                                    <Condition Property="IsEnabled" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="{DynamicResource InputBackgroundHover}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource InputBorderHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InputTextHover}"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ContentTextStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#007b43"/>
+        </Style>
+        <Style x:Key="ResultTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <ControlTemplate x:Key="ButtonStyle" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#d6e9ca"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#93ca76"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <!--<Setter Property="Background" TargetName="border" Value="#d6e9ca"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="#316745"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <!--ViewModelクラス-->
+    <UserControl.DataContext>
+        <vm:DirectRegisterViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--対局結果グリッド-->
+                    <Grid Grid.Row="0" Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--ヘッダ-->
+                            <Grid Grid.Column="0" Grid.Row="0" Margin="5">
+                                <TextBlock Text="名前" HorizontalAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="0" Margin="5">
+                                <TextBlock Text="スコア" HorizontalAlignment="Center"/>
+                            </Grid>
+                            <!--東家-->
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="5">
+                                <ComboBox x:Name="cmbBoxPersonEast" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonEast}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="1" Margin="5">
+                                <TextBox x:Name="txtBoxPersonEtcEast" Text="{Binding Path=EastPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True" Margin="0,0,0,10"/>
+                            </Grid>
+                            <!--南家-->
+                            <Grid Grid.Column="0" Grid.Row="2" Margin="5">
+                                <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="2" Margin="5">
+                                <TextBox x:Name="txtBoxPersonEtcSouth" Text="{Binding Path=SouthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True" Margin="0,0,0,10"/>
+                            </Grid>
+                            <!--西家-->
+                            <Grid Grid.Column="0" Grid.Row="3" Margin="5">
+                                <ComboBox x:Name="cmbBoxPersonWest" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonWest}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="3" Margin="5">
+                                <TextBox x:Name="txtBoxPersonEtcWest" Text="{Binding Path=WestPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True" Margin="0,0,0,10"/>
+                            </Grid>
+                            <!--北家-->
+                            <Grid Grid.Column="0" Grid.Row="4" Margin="5">
+                                <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="4" Margin="5">
+                                <TextBox x:Name="txtBoxPersonEtcNorth" Text="{Binding Path=NorthPriseScore, StringFormat={}{0:N0}}" Style="{DynamicResource BaseScoreStyle}" behavior:TextBoxGotFocusBehavior.SelectAllOnGotFocus="True" behavior:TextBoxBehavior.IsNumeric="True" Margin="0,0,0,10"/>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                </Grid>
+
+                <!--対局設定グリッド-->
+                <Grid Grid.Column="1" Margin="5">
+                    <StackPanel Orientation="Vertical">
+                        <Button x:Name="btnReloadCollections" Content="対局者・設定を更新" Margin="0,0,0,10" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=ReloadCommand}"/>
+                        <CheckBox x:Name="chkIgnoreUnbalance" Content="計算の不一致を無視する" Margin="10,0,0,0" IsChecked="{Binding Path=IgnoreUnbalance}"/>
+                        <TextBlock Text="対局日" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
+                        <DatePicker x:Name="datGame" SelectedDate="{Binding Path=GameDate}" Margin="10,0,0,10"/>
+                        <TextBlock Text="対局設定" Style="{DynamicResource ContentTextStyle}" Margin="0,0,10,0"/>
+                        <ComboBox x:Name="cmbBoxGameSetting" ItemsSource="{Binding Path=ColRule, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRule}" SelectedIndex="0" Margin="10,0,0,10"/>
+                        <Grid Margin="10,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="レート"/>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Rate, StringFormat={}{0:N2}}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <TextBlock Text="配給原点"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.BasePoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="返し"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.ReturnPoint, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="0">
+                                <TextBlock Text="ウマ（3→2）"/>
+                            </Grid>
+                            <Grid Grid.Row="3" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Prise3To2, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="0">
+                                <TextBlock Text="ウマ（4→1）"/>
+                            </Grid>
+                            <Grid Grid.Row="4" Grid.Column="1">
+                                <TextBlock Text="{Binding SelectedRule.Prise4To1, StringFormat={}{0:N0} 点}" Margin="5,0,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="0">
+                                <TextBlock Text="端数取扱"/>
+                            </Grid>
+                            <Grid Grid.Row="5" Grid.Column="1">
+                                <!--コンバータが必要-->
+                                <TextBlock Text="{Binding SelectedRule.Fraction, Converter={StaticResource EnumToString}}" Margin="5,0,0,0"/>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="5,0,5,0">
+                            <Button x:Name="btnCalcGame" Content="計算" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=CalcGameCommand}"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="5,0,5,0">
+                            <Button x:Name="btnGenerateGame" Content="保存" Template="{DynamicResource ButtonStyle}" Command="{Binding Path=GenerateGameCommand}"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
@@ -68,11 +71,15 @@
     <Compile Include="Models\NewGameModel.cs" />
     <Compile Include="Models\PlayerSettingModel.cs" />
     <Compile Include="Models\RuleSettingModel.cs" />
+    <Compile Include="ViewModels\DirectRegisterViewModel.cs" />
     <Compile Include="ViewModels\GameResultViewModel.cs" />
     <Compile Include="ViewModels\HandleFractionViewModel.cs" />
     <Compile Include="ViewModels\NewGameViewModel.cs" />
     <Compile Include="ViewModels\PlayerSettingViewModel.cs" />
     <Compile Include="ViewModels\RuleSettingViewModel.cs" />
+    <Compile Include="Views\DirectRegisterView.xaml.cs">
+      <DependentUpon>DirectRegisterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GameResultView.xaml.cs">
       <DependentUpon>GameResultView.xaml</DependentUpon>
     </Compile>
@@ -122,6 +129,10 @@
     </Compile>
     <Compile Include="Pages\Settings\AppearanceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Page Include="Views\DirectRegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GameResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,6 +155,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
