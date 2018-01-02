@@ -10,9 +10,9 @@ namespace MahjongScoreManager_MUI.Common
     public static class FilePath
     {
         /// <summary>
-        /// 基底ディレクトリ
+        /// 基底ディレクトリ（C:\Users\UserName\AppData\Roaming）
         /// </summary>
-        public static string BaseDir = String.Format("{0}/MahjongScoreManager/xml", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        public static string BaseDir = String.Format("{0}/MahjongScoreManager/xml", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
         /// <summary>
         /// 対局者XMLファイルパス
         /// </summary>
