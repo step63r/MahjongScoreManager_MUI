@@ -169,7 +169,7 @@
                                 </StackPanel>
                             </Grid>
                             <!--南家-->
-                            <Grid Grid.Column="2" Grid.Row="1" Margin="5">
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="南" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonSouth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonSouth}" SelectedIndex="-1" Margin="0,0,0,10"/>
@@ -191,7 +191,7 @@
                                 </StackPanel>
                             </Grid>
                             <!--北家-->
-                            <Grid Grid.Column="0" Grid.Row="1" Margin="5">
+                            <Grid Grid.Column="2" Grid.Row="1" Margin="5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="北" FontSize="24"/>
                                     <ComboBox x:Name="cmbBoxPersonNorth" ItemsSource="{Binding Path=ColPerson, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedPersonNorth}" SelectedIndex="-1" Margin="0,0,0,10"/>
