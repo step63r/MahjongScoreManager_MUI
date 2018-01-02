@@ -131,6 +131,9 @@
                 }
             }
 
+            // 総得点の降順でソート
+            ColResult = new ObservableCollection<DataGridResult>(ColResult.OrderByDescending(item => item.TotalScore));
+
             return ColResult;
         }
     }
