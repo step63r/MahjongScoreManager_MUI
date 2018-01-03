@@ -76,7 +76,7 @@
 ## Contact Us
 <dl>
     <dt>サイト</dt>
-    <dd>http://projectstep.web.fc2.com/</dd>
+    <dd>http://minatopj.php.xdomain.jp/</dd>
     <dt>メール</dt>
     <dd>clannad.ilove.magister at gmail.com</dd>
 </dl>
